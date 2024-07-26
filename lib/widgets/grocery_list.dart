@@ -84,36 +84,18 @@ class _GroceryListState extends State<GroceryList> {
       final Map<String, dynamic> listData = json.decode(response.body);
       final List<GroceryItem> loadedItems = [];
       for (final item in listData.entries) {
-        if (item.key == 'todo') {
-          final Map<String, dynamic> todoList = item.value;
-          for (final todoItem in todoList.entries) {
-            final category = categories.entries
-                .firstWhere((catItem) =>
-                    catItem.value.title == todoItem.value['category'])
-                .value;
-            loadedItems.add(
-              GroceryItem(
-                id: todoItem.key,
-                name: todoItem.value['name'],
-                quantity: todoItem.value['quantity'],
-                category: category,
-              ),
-            );
-          }
-        } else {
-          final category = categories.entries
-              .firstWhere(
-                  (catItem) => catItem.value.title == item.value['category'])
-              .value;
-          loadedItems.add(
-            GroceryItem(
-              id: item.key,
-              name: item.value['name'],
-              quantity: item.value['quantity'],
-              category: category,
-            ),
-          );
-        }
+        final category = categories.entries
+            .firstWhere(
+                (catItem) => catItem.value.title == item.value['category'])
+            .value;
+        loadedItems.add(
+          GroceryItem(
+            id: item.key,
+            name: item.value['name'],
+            quantity: item.value['quantity'],
+            category: category,
+          ),
+        );
       }
 
       setState(() {

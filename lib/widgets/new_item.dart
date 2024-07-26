@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shopping_list/data/categories.dart';
 import 'package:shopping_list/models/category.dart';
 import 'package:shopping_list/models/grocery_item.dart';
+import 'package:shopping_list/widgets/input_image.dart';
 
 class NewItem extends StatefulWidget {
   const NewItem({super.key});
@@ -17,13 +19,18 @@ class NewItem extends StatefulWidget {
 
 class _NewItemState extends State<NewItem> {
   final _formKey = GlobalKey<FormState>();
+  Key _uniqueKey = UniqueKey();
   var _enteredName = '';
   var _enteredQuantity = 1;
   var _selectedCategory = categories[Categories.vegetables]!;
   var _isSending = false;
+  File? _selectedImage;
 
   void _saveItem() async {
     if (_formKey.currentState!.validate()) {
+      if (_selectedImage == null) {
+        return;
+      }
       _formKey.currentState!.save();
       setState(() {
         _isSending = true;
@@ -150,6 +157,13 @@ class _NewItemState extends State<NewItem> {
                 ],
               ),
               const SizedBox(height: 12),
+              ImageInput(
+                onPickImage: (image) {
+                  _selectedImage = image;
+                },
+                key: _uniqueKey,
+              ),
+              const SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -158,6 +172,9 @@ class _NewItemState extends State<NewItem> {
                         ? null
                         : () {
                             _formKey.currentState!.reset();
+                            setState(() {
+                              _uniqueKey = UniqueKey();
+                            });
                           },
                     child: const Text('Reset'),
                   ),
