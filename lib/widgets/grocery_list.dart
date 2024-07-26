@@ -54,6 +54,7 @@ class _GroceryListState extends State<GroceryList> {
           id: item.key,
           name: item.value['name'],
           quantity: item.value['quantity'],
+          image: null,
           category: category,
         ),
       );
@@ -93,6 +94,7 @@ class _GroceryListState extends State<GroceryList> {
             id: item.key,
             name: item.value['name'],
             quantity: item.value['quantity'],
+            image: null,
             category: category,
           ),
         );
@@ -131,7 +133,8 @@ class _GroceryListState extends State<GroceryList> {
       _groceryItems.remove(item);
     });
     try {
-      final url = Uri.https('demoproject-e5651-default-rtdb.firebaseio.com',
+      final url = Uri.https(
+          '_____demoproject-e5651-default-rtdb.firebaseio.com',
           'shopping_list/${item.id}.json');
 
       final response = await http.delete(url);
