@@ -207,7 +207,6 @@ class _NewItemState extends State<NewItem> {
   }
 
   Future<String?> uploadImage(File imageFile) async {
-    await Firebase.initializeApp();
     final storageRef = FirebaseStorage.instance
         .ref()
         .child('images/${DateTime.now().millisecondsSinceEpoch}.jpg');

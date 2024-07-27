@@ -1,8 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:shopping_list/widgets/grocery_list.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyDiwr4ff2PHXv2rQ_627kAIve6_lkxHVvo",
+      appId: "1:392264614365:android:46857c8900c254b12fb634",
+      messagingSenderId: "392264614365",
+      projectId: "demoproject-e5651",
+      storageBucket: "demoproject-e5651.appspot.com",
+    ),
+  );
   runApp(const MyApp());
 }
 

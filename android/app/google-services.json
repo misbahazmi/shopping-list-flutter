@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "392264614365",
+    "firebase_url": "https://demoproject-e5651-default-rtdb.firebaseio.com",
+    "project_id": "demoproject-e5651",
+    "storage_bucket": "demoproject-e5651.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:392264614365:android:46857c8900c254b12fb634",
+        "android_client_info": {
+          "package_name": "com.misbah.shopping.shopping_list"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiwr4ff2PHXv2rQ_627kAIve6_lkxHVvo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
