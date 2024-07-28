@@ -94,7 +94,7 @@ class _GroceryListState extends State<GroceryList> {
             id: item.key,
             name: item.value['name'],
             quantity: item.value['quantity'],
-            image: null,
+            image: item.value['image'],
             category: category,
           ),
         );
@@ -133,8 +133,7 @@ class _GroceryListState extends State<GroceryList> {
       _groceryItems.remove(item);
     });
     try {
-      final url = Uri.https(
-          '_____demoproject-e5651-default-rtdb.firebaseio.com',
+      final url = Uri.https('demoproject-e5651-default-rtdb.firebaseio.com',
           'shopping_list/${item.id}.json');
 
       final response = await http.delete(url);
@@ -172,11 +171,15 @@ class _GroceryListState extends State<GroceryList> {
           key: ValueKey(_groceryItems[index].id),
           child: ListTile(
             title: Text(_groceryItems[index].name),
-            leading: Container(
-              width: 24,
-              height: 24,
-              color: _groceryItems[index].category.color,
-            ),
+            leading: _groceryItems[index].image == null
+                ? CircleAvatar(
+                    backgroundColor: _groceryItems[index].category.color,
+                    maxRadius: 20,
+                  )
+                : CircleAvatar(
+                    backgroundImage: NetworkImage(_groceryItems[index].image!),
+                    maxRadius: 20,
+                  ),
             trailing: Text(
               _groceryItems[index].quantity.toString(),
             ),
