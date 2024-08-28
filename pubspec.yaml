@@ -40,6 +40,7 @@ dependencies:
   firebase_core: ^2.5.0
   firebase_storage: ^11.0.0
   firebase_messaging: ^14.7.19
+  location: ^6.0.2
 
 dev_dependencies:
   flutter_test:
