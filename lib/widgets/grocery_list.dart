@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shopping_list/data/categories.dart';
@@ -26,6 +27,16 @@ class _GroceryListState extends State<GroceryList> {
     super.initState();
     //_loadedItems = _loadItems();
     _loadShoppingList();
+    setupPushNotifications();
+  }
+
+  void setupPushNotifications() async {
+    final fcm = FirebaseMessaging.instance;
+
+    await fcm.requestPermission();
+
+    final token = await fcm.getToken();
+    print(token);
   }
 
   Future<List<GroceryItem>> _loadItems() async {
