@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:location/location.dart';
 import 'package:shopping_list/data/categories.dart';
 import 'package:shopping_list/models/category.dart';
 
@@ -37,6 +38,11 @@ class _GroceryListState extends State<GroceryList> {
 
     final token = await fcm.getToken();
     print(token);
+
+    Location location = Location();
+    LocationData locationData = await location.getLocation();
+
+    print("Location: ${locationData.latitude}");
   }
 
   Future<List<GroceryItem>> _loadItems() async {
