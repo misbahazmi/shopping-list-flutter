@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'package:shopping_list/data/categories.dart';
-import 'package:shopping_list/models/category.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shopping_list/models/grocery_item.dart';
 import 'package:shopping_list/widgets/new_item.dart';
 
@@ -34,7 +33,21 @@ class _GroceryListState extends State<GroceryList> {
   void setupPushNotifications() async {
     final fcm = FirebaseMessaging.instance;
 
-    await fcm.requestPermission();
+    await fcm.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    await fcm.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
 
     final token = await fcm.getToken();
     print(token);
@@ -43,6 +56,14 @@ class _GroceryListState extends State<GroceryList> {
     LocationData locationData = await location.getLocation();
 
     print("Location: ${locationData.latitude}");
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      if (message.notification != null) {
+        print('Notification Title: ${message.notification!.title}');
+        print('Notification Body: ${message.notification!.body}');
+      }
+    });
   }
 
   Future<List<GroceryItem>> _loadItems() async {
@@ -211,7 +232,8 @@ class _GroceryListState extends State<GroceryList> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Groceries'),
+        //    title: const Text('Your Groceries'),
+        title: Text(AppLocalizations.of(context)!.helloWorld),
         actions: [
           IconButton(
             onPressed: _addItem,
@@ -220,6 +242,15 @@ class _GroceryListState extends State<GroceryList> {
         ],
       ),
       body: content,
+      // body: SingleChildScrollView(
+      //   child: Column(
+      //     children: [
+      //       //Text(AppLocalizations.of(context)!.helloWorld),
+      //       content
+      //     ],
+      // ),
+      //)
+
       // FutureBuilder(
       //   future: _loadedItems,
       //   builder: (context, snapshot) {
